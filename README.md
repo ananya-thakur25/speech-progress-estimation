@@ -49,42 +49,59 @@ Feature Extraction Pipeline:
 
     Textual Structural Features (8 total):
     Extracted from each chunk using regex and string operations:
+
         Word Count, Character Count
+
         Punctuation Marks: Number of Commas, Periods, Exclamations, Questions
+
         Unique Word Count and Fraction of Unique Words
 
     Semantic Embeddings:
+
         Model: all-mpnet-base-v2 from SentenceTransformers (768-dim)
+
         Captures deep contextual semantics per chunk
 
     Dimensionality Reduction:
+
         PCA → Retain top 5 principal components of SBERT vectors
 
     Topic Clustering (Unsupervised):
+
         UMAP (2D) + HDBSCAN to assign thematic cluster labels
+
         No. of clusters adapt dynamically to semantic density
 
     Temporal Progression Features:
+
         Binary flag: cluster_seen_before (0 = new topic, 1 = recurring topic)
+
         fraction_unique_clusters: Tracks cumulative topic saturation during speech progression
 
 Final Feature Vector:
 Combined 17-dimensional representation for each chunk:
+
 [8 structural features] + [5 PCA features] + [cluster ID, is_noise] + [cluster_seen_before, fraction_unique_clusters]
 
 Modeling Approach:
-    Regressor: LightGBM (LGBMRegressor).
-    Tuning: Early stopping (50 rounds), MAE as evaluation metric.
-    Validation Strategy: 80/20 random train-test split.
-    Optimization: Gradient-boosted trees with learning_rate = 0.01 and 1000 estimators.
+
+    Regressor: LightGBM (LGBMRegressor)
+
+    Tuning: Early stopping (50 rounds), MAE as evaluation metric
+
+    Validation Strategy: 80/20 random train-test split
+
+    Optimization: Gradient-boosted trees with learning_rate = 0.01 and 1000 estimators
 
 Performance Summary:
-    MAE: ~11.04% on test set.
-    R² Score: ~0.73 – indicates strong correlation between actual and predicted completion percentages.
+
+    MAE: ~11.04% on test set
+
+    R² Score: ~0.73 – indicates strong correlation between actual and predicted completion percentages
 
 Saved Artifacts:
-    chunk_embeddings.npy, pca_transformer.pkl, hdbscan_model.pkl, lgbm_model.pkl, and feature_columns.pkl.
-    Modular prediction script to accept new transcript chunks and return real-time speech completion estimate.
+
+    chunk_embeddings.npy, pca_transformer.pkl, hdbscan_model.pkl, lgbm_model.pkl, and feature_columns.pkl
 
 ---
 
