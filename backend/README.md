@@ -2,12 +2,6 @@
 
 This is the **Node.js + Python** backend for the Speech Progress Estimation web application.
 
-## Deployment Status
-
-The backend **requires GPU and high-memory packages** (like `torch`, `BERTopic`, `sentence-transformers`, etc.)  
-Hence, it **cannot be deployed on Render free tier** (512MB limit).  
-Users can **run it locally** using the steps below.
-
 ## Local Setup Instructions
 
 1. Navigate to the backend folder:
@@ -58,4 +52,4 @@ Backend will start at:
 
 ## 📎 Note
 
-We've also provided the Jupyter Notebooks in the GitHub repo for training the ML model and saving the `.pkl` file.
+We've also provided a Jupyter Notebook in the GitHub repo for training the ML model and saving the `.pkl` file.
